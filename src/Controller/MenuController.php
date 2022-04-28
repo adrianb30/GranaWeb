@@ -3,10 +3,16 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Security;
 
 class MenuController extends AbstractController
 {
 
+    private $security;
+    public function __construct(Security $security)
+    {
+         $this->security = $security;
+    }
     /**
      * @var String $route_name
      *   Machine name of a route
@@ -39,7 +45,13 @@ class MenuController extends AbstractController
             }
             $special= null;
         }
-        
+        if ($this->security->isGranted('ROLE_ADMIN')) {
+            $items['administracion']['title'] = 'Administracion';
+            $items['administracion']['url'] = $this->generateUrl('app_admin');
+            if ($route_name == 'administracion') {
+                $items['administracion']['class'] = "active";
+            }
+        }
         
         
         // $items['products']['title'] = 'Products';

@@ -1,9 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/base.html.twig' %}
 
-{% block title %}Producto index{% endblock %}
+{% block title %}Productos{% endblock %}
 
 {% block body %}
-    <h1>Producto index</h1>
+    <h1>Almacén de productos</h1>
 
     <table class="table">
         <thead>
@@ -25,7 +25,7 @@
                 <td>{{ producto.descripcion }}</td>
                 <td>{{ producto.stock }}</td>
                 <td>{{ producto.precio }}</td>
-                <td><img src='{{ asset('uploads/img/' ~ producto.imagen) }}'></td>
+                <td>{{ producto.imagen}}</td>
                 <td>
                     <a href="{{ path('app_admin_producto_show', {'id': producto.id}) }}">show</a>
                     <a href="{{ path('app_admin_producto_edit', {'id': producto.id}) }}">edit</a>
