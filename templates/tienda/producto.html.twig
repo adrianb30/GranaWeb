@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Producto index{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1 class="col-12">{{ producto.nombre }}</h1>
+        <div class="col-12">
+            <div class="col-3">
+                <img src="{{ asset('uploads/img/' ~ producto.imagen) }}">
+                
+            </div>
+            <div class="col-3">
+                <p>{{ producto.descripcion }}</p>
+            </div>
+            <div class="col-3">
+                <button type="button" class="btn btn-primary">Comprar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

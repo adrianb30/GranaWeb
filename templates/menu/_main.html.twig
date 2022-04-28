@@ -1,0 +1,40 @@
+<header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><h3><strong class="text-primary">Grana</strong><strong>Web</strong></h3></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 menuSize">
+                {% for item in items %}
+                    <li class="nav-item {% if item.class is defined %}{{ item.class }}{% endif %}">
+                        <a class="nav-link active " href="{{ item.url }}"><strong>{{ item.title }}</strong></a>
+                    </li>
+                {% endfor %}
+                {% if specials != null %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <strong>Mi Cuenta</strong>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    
+                        {% for special in specials %}
+                            <li><a class="dropdown-item" href="{{ special.url }}"><strong>{{ special.title }}</strong></a></li>
+                        {% endfor %}
+                    
+                        {# <li><a class="dropdown-item" href="#"><strong>RAM</strong></a></li> #}
+                        {# <li><hr class="dropdown-divider"></li> #}
+                        {# <li><a class="dropdown-item" href="#">Something else here</a></li> #}
+                    </ul>
+                </li>
+                {% endif %}
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="¿Qué estas buscando?" aria-label="Search">
+                <button class="btn btn-primary" type="submit">Buscar</button>
+            </form>
+            </div>
+        </div>
+    </nav>
+</header>

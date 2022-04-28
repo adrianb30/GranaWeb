@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mi perfil{% endblock %}
+
+{% block body %}
+{# {{ dump(informacion) }} #}
+
+
+<div class="container">
+{% if mensaje %}
+    <div class="alert alert-success alert-dismissible fade show mt-3 text-center" role="alert">
+        {{ mensaje }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endif %}
+    <h2 class="text-center mt-4">Bienvenido, {{ informacion.nombre }}</h2>
+	<div class="row justify-content-center">
+		<div class="col-12 col-md-8 col-lg-6 pb-5">
+            <form method="post">
+                <div class="card border-dark rounded">
+                    <div class="card-header p-0">
+                        <div class="bg-dark text-white text-center py-2">
+                            <h3><i class="fa fa-address-card"></i> Tus Datos</h3>
+                            <p class="m-0">Con gusto te ayudaremos</p>
+                        </div>
+                    </div>
+                    <div class="card-body p-3">
+                        <div class="form-group d-flex">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend ">
+                                    <div class="input-group-text"><i class="fa fa-user text-primary mt-1 mb-1"></i></div>
+                                </div>
+                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" value="{{ informacion.nombre}}" required>
+                            </div>
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control form_space" id="apellidos" name="apellidos" placeholder="Apellidos" value="{{ informacion.apellidos}}" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fa fa-envelope text-primary mt-1 mb-1"></i></div>
+                                </div>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Corro electronico" value="{{ informacion.email }}" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fa fa-id-card text-primary mt-1 mb-1"></i></div>
+                                </div>
+                                <input type="text" class="form-control" id="dni" name="dni" placeholder="DNI" value="{{ informacion.dni }}" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fa fa-compass text-primary mt-1 mb-1"></i></div>
+                                </div>
+                                <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Escribe tu dirección" value="{{ informacion.direccion }}" required>
+                            </div>
+                        </div>
+                        <div class="text-center form-group">
+                            <input type="submit" value="Actualizar información" name="btn_actualizar" class="btn btn-outline-primary btn-block rounded-0 p-5 py-2 mt-2">
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+	</div>
+</div>
+{% endblock %}

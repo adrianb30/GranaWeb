@@ -1,0 +1,12 @@
+{# {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }} #}
+{{ form_start(form) }}
+   {{ form_row(form.nombre) }}
+   {{ form_row(form.precio) }}
+   {{ form_row(form.stock) }}
+   {{ form_row(form.descripcion) }}
+   {{ form_row(form.imagen) }}
+    <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
