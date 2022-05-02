@@ -19,14 +19,30 @@ class ProductoType extends AbstractType
         $builder
             ->add('nombre', TextType::class,[
                 'label' => 'Nombre:',
-                'help' => 'Introduce el nombre del producto'
+                'attr' => [
+                    'class' => 'form-control mb-2',
+                    'placeholder' => 'Introduce el nombre del producto'
+                ],
             ])
-            ->add('descripcion')
-            ->add('stock')
+            ->add('descripcion', TextType::class,[
+                'attr' => [
+                    'class' => 'form-control mb-2',
+                    'placeholder' => 'Introduce la descripción del producto'
+                ],
+            ])
+            ->add('stock', NumberType::class,[
+                'attr' => [
+                    'class' => 'form-control mb-2',
+                    'placeholder' => 'Introduce el stock'
+                ],
+            ])
             ->add('imagen', FileType::Class, [
                 'label' => 'Imagen (JPG,PNG)',
                 'mapped' => false,
                 'required' => false,
+                'attr' => [
+                    'class' => 'form-control',
+                ],
                 'constraints' => [
                     new File([
                         'maxSize' => '500M',
@@ -40,9 +56,8 @@ class ProductoType extends AbstractType
             ])
             ->add('precio', NumberType::class,[
                 'label'=>'Precio:',
-                'help' => 'Intoduce un valor decimal',
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control mb-2',
                     'placeholder' => 'Precio del producto'
                 ],
             ])

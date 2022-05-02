@@ -1,38 +1,44 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}Producto{% endblock %}
+{% block title %}{{ producto.nombre }}{% endblock %}
 
 {% block body %}
-    <h1>Producto: {{ producto.nombre }}</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ producto.id }}</td>
-            </tr>
-            <tr>
-                <th>Imagen</th>
-                <td><img src="{{ asset('uploads/img/' ~ producto.imagen) }}"></td>
-            </tr>
-            <tr>
-                <th>Descripcion</th>
-                <td>{{ producto.descripcion }}</td>
-            </tr>
-            <tr>
-                <th>Stock</th>
-                <td>{{ producto.stock }}</td>
-            </tr>
-            <tr>
-                <th>Precio</th>
-                <td>{{ producto.precio }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_admin_producto_index') }}">back to list</a>
-
-    <a href="{{ path('app_admin_producto_edit', {'id': producto.id}) }}">edit</a>
-
-    {{ include('producto/_delete_form.html.twig') }}
+<div class="container">
+    <div class="row">
+        <h1>Producto: {{ producto.nombre }}</h1>
+        
+        <hr>
+        
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>ID</th>
+                    <td>{{ producto.id }}</td>
+                </tr>
+                <tr>
+                    <th>Imagen</th>
+                    <td colspan="3"><img src="{{ asset('uploads/img/' ~ producto.imagen) }}"></td>
+                </tr>
+                <tr>
+                    <th>Descripción</th>
+                    <td colspan="3">{{ producto.descripcion }}</td>
+                </tr>
+                <tr>
+                    <th>Stock</th>
+                    <td colspan="3">{{ producto.stock }}</td>
+                </tr>
+                <tr>
+                    <th>Precio</th>
+                    <td colspan="3">{{ producto.precio }}</td>
+                </tr>
+                <tr>
+                    <th>Acciones</th>
+                    <td><a class="btn btn-outline-secondary" href="{{ path('app_admin_producto_index') }}">Volver</a></td>
+                    <td><a class="btn btn-outline-warning ml-5" href="{{ path('app_admin_producto_edit', {'id': producto.id}) }}">Editar</a></td>
+                    <td>{{ include('producto/_delete_form.html.twig') }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}
