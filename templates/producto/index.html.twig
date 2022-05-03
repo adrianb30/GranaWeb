@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Almacén de productos</h1>
     <div class="float-right d-flex">
-        <a class="btn btn-outline-primary ml-auto" href="{{ path('app_admin_producto_new') }}">Create new</a>
+        <a class="btn btn-outline-primary ml-auto" href="{{ path('app_admin_producto_new') }}">Añadir Producto</a>
     </div>
     <hr>
     <table class="table">
@@ -30,8 +30,8 @@
                 <td>{{ producto.precio }}</td>
                 <td>{{ producto.imagen}}</td>
                 <td>
-                    <a class="btn btn-outline-info" href="{{ path('app_admin_producto_show', {'id': producto.id}) }}">show</a>
-                    <a class="btn btn-outline-success" href="{{ path('app_admin_producto_edit', {'id': producto.id}) }}">edit</a>
+                    <a class="btn btn-outline-info" href="{{ path('app_admin_producto_show', {'id': producto.id}) }}">Ver</a>
+                    <a class="btn btn-outline-success" href="{{ path('app_admin_producto_edit', {'id': producto.id}) }}">Modificar</a>
                 </td>
             </tr>
         {% else %}

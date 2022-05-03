@@ -91,7 +91,7 @@ class ProductoController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $productoRepository->add($producto);
+            
             /** @var UploadedFile $imagendir */
             $imagendir = $form['imagen']->getData();
 
@@ -112,14 +112,17 @@ class ProductoController extends AbstractController
                         $newFilename
                     );
                 } catch (FileException $e) {
+                    echo $e;
                     // ... handle exception if something happens during file upload
                 }
 
                 // Updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
                 $producto->setImagen($newFilename);
+                echo $producto->getimagen();
             }
-            return $this->redirectToRoute('app_producto_index', [], Response::HTTP_SEE_OTHER);
+            $productoRepository->add($producto);
+            return $this->redirectToRoute('app_admin_producto_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('producto/edit.html.twig', [
