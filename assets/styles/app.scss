@@ -34,5 +34,8 @@ $secondary: rgb(235, 13, 161);
     padding-bottom:462px !important;
 }
 }
+.text-left{
+    text-align: left !important;
+}
 // the ~ allows you to reference things in node_modules
 @import "~bootstrap/scss/bootstrap";

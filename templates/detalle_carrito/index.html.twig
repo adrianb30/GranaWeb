@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DetalleCarrito index{% endblock %}
+
+{% block body %}
+    <h1>DetalleCarrito index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Total</th>
+                <th>Cantidad</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for detalle_carrito in detalle_carritos %}
+            <tr>
+                <td>{{ detalle_carrito.id }}</td>
+                <td>{{ detalle_carrito.total }}</td>
+                <td>{{ detalle_carrito.cantidad }}</td>
+                <td>
+                    <a href="{{ path('app_detalle_carrito_show', {'id': detalle_carrito.id}) }}">show</a>
+                    <a href="{{ path('app_detalle_carrito_edit', {'id': detalle_carrito.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_detalle_carrito_new') }}">Create new</a>
+{% endblock %}

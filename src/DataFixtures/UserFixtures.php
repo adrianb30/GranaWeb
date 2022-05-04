@@ -20,10 +20,15 @@ class UserFixtures extends Fixture
         // $product = new Product();
         // $manager->persist($product);
         $user = new User();
-        $user->setEmail('info@granaweb.com');
+        $user->setEmail('abargom082@g.educaand.es');
+        $user->setNombre('Adrian');
+        $user->setApellidos('Barranco Gómez');
+        $user->setDni('77024082A');
+        $user->setDireccion('Calle Alamo');
+        $user->setRoles(['ROLE_ADMIN']);
         $user->setPassword($this->passwordEncoder->encodePassword(
             $user,
-            'granaweb.com'
+            'Toor_2020'
         ));
         $manager->persist($user);
 

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit DetalleCarrito{% endblock %}
+
+{% block body %}
+    <h1>Edit DetalleCarrito</h1>
+
+    {{ include('detalle_carrito/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_detalle_carrito_index') }}">back to list</a>
+
+    {{ include('detalle_carrito/_delete_form.html.twig') }}
+{% endblock %}

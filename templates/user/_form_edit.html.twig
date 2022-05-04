@@ -42,31 +42,10 @@
     <div class="form-outline form-white mb-4">
         <div class="input-group mb-2">
             <div class="input-group-prepend col-2">
-                <div class="input-group-text">Contraseña</div>
-            </div>
-            {{ form_widget(form.plainPassword) }}
-        </div>  
-    </div>
-    <div class="form-outline form-white mb-4">
-        <div class="input-group mb-2">
-            <div class="input-group-prepend col-2">
-                <div class="input-group-text">Confirmar</div>
-            </div>
-            {{ form_widget(form.confirmpassword) }}
-        </div>  
-    </div>    
-    <div class="form-outline form-white mb-4">
-        <div class="input-group mb-2">
-            <div class="input-group-prepend col-2">
                 <div class="input-group-text">Role</div>
             </div>
             {{ form_widget(form.Roles) }}
         </div>  
     </div>
-    <div class="form-outline form-white mb-4">
-        <div class="input-group mb-2">
-            <button class="btn btn-success form-control">{{ button_label|default('Guardar') }}</button>
-        </div>  
-    </div>
-    
+    <button class="btn btn-outline-success">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

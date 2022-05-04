@@ -30,8 +30,8 @@
                 <td>{{ producto.precio }}</td>
                 <td>{{ producto.imagen}}</td>
                 <td>
-                    <a class="btn btn-outline-info" href="{{ path('app_admin_producto_show', {'id': producto.id}) }}">Ver</a>
-                    <a class="btn btn-outline-success" href="{{ path('app_admin_producto_edit', {'id': producto.id}) }}">Modificar</a>
+                    <a class="btn btn-outline-info" style="width:60px;" href="{{ path('app_admin_producto_show', {'id': producto.id}) }}">Ver</a>
+                    <a class="btn btn-outline-success" style="width:60px;" href="{{ path('app_admin_producto_edit', {'id': producto.id}) }}">Editar</a>
                 </td>
             </tr>
         {% else %}
