@@ -57,6 +57,13 @@ class Producto
      */
     private $imagen;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Categoria::class)
+     */
+    private $categoria;
+
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -121,4 +128,18 @@ class Producto
 
         return $this;
     }
+
+    public function getCategoria(): ?Categoria
+    {
+        return $this->categoria;
+    }
+
+    public function setCategoria(?Categoria $categoria): self
+    {
+        $this->categoria = $categoria;
+
+        return $this;
+    }
+
+
 }

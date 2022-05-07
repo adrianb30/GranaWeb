@@ -46,11 +46,7 @@ class ProductoType extends AbstractType
                 'constraints' => [
                     new File([
                         'maxSize' => '500M',
-                        'mimeTypes' => [
-                            'imagen/png',
-                            'image/jpeg'
-                        ],
-                        'mimeTypesMessage' => 'Por favor seleccione un imagen valida',
+                        
                     ])
                 ],
             ])

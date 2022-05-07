@@ -15,8 +15,16 @@ class TiendaController extends AbstractController
      */
     public function index(ProductoRepository $productoRepository): Response
     {
+        $productos = $productoRepository->findAll();
+        
+        if( isset($_POST['buscador']) ){
+            $productos = $productoRepository->findbyNombre($_POST['clave']);
+            return $this->render('tienda/index.html.twig', [
+                'productos' => $productos,
+            ]);
+        }
         return $this->render('tienda/index.html.twig', [
-            'productos' => $productoRepository->findAll(),
+            'productos' => $productos,
         ]);
     }
     /**
@@ -28,4 +36,5 @@ class TiendaController extends AbstractController
             'producto' => $producto,
         ]);
     }
+    
 }

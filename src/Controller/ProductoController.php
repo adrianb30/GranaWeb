@@ -63,7 +63,7 @@ class ProductoController extends AbstractController
                 $producto->setImagen($newFilename);
             }
             $productoRepository->add($producto);
-            return $this->redirectToRoute('app_producto_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_admin_producto_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('producto/new.html.twig', [

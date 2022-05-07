@@ -18,41 +18,26 @@ class Carrito
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity=user::class, inversedBy="carrito", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToOne(targetEntity="User", inversedBy="Carrito")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    private $user_id;
+    // @ORM\OneToOne(targetEntity=user::class, inversedBy="carrito", cascade={"persist", "remove"})
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $total;
+     private $user;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUser_id(): ?user
+    public function getUser(): ?user
     {
-        return $this->user_id;
+        return $this->user;
     }
 
-    public function setUser_id(user $user): self
+    public function setUser(?user $user): self
     {
-        $this->user_id = $user_id;
-
-        return $this;
-    }
-
-    public function getTotal(): ?int
-    {
-        return $this->total;
-    }
-
-    public function setTotal(int $total): self
-    {
-        $this->total = $total;
+        $this->user = $user;
 
         return $this;
     }

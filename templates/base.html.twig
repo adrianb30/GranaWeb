@@ -18,5 +18,52 @@
     <body>
         {{ render(controller('App\\Controller\\MenuController::mainMenu', {'route_name': app.request.attributes.get('_route')})) }}
         {% block body %}{% endblock %}
+        <footer class="container py-5">
+            <div class="row">
+               
+                <div class="col-6 col-md">
+                <h5>Novedades</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="link-secondary" href="#">Cool stuff</a></li>
+                    <li><a class="link-secondary" href="#">Random feature</a></li>
+                    <li><a class="link-secondary" href="#">Team feature</a></li>
+                    <li><a class="link-secondary" href="#">Stuff for developers</a></li>
+                    <li><a class="link-secondary" href="#">Another one</a></li>
+                    <li><a class="link-secondary" href="#">Last time</a></li>
+                </ul>
+                </div>
+                <div class="col-6 col-md">
+                <h5>Recursos</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="link-secondary" href="#">Resource name</a></li>
+                    <li><a class="link-secondary" href="#">Resource</a></li>
+                    <li><a class="link-secondary" href="#">Another resource</a></li>
+                    <li><a class="link-secondary" href="#">Final resource</a></li>
+                </ul>
+                </div>
+                <div class="col-6 col-md">
+                <h5>Colaboraciones</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="link-secondary" href="#">Business</a></li>
+                    <li><a class="link-secondary" href="#">Education</a></li>
+                    <li><a class="link-secondary" href="#">Government</a></li>
+                    <li><a class="link-secondary" href="#">Gaming</a></li>
+                </ul>
+                </div>
+                <div class="col-6 col-md">
+                <h5>Sobre Nosotros</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="link-secondary" href="#">Team</a></li>
+                    <li><a class="link-secondary" href="#">Locations</a></li>
+                    <li><a class="link-secondary" href="#">Privacy</a></li>
+                    <li><a class="link-secondary" href="#">Terms</a></li>
+                </ul>
+                </div>
+            </div>
+            <p class="text-center"><small class="d-block mb-3 text-muted">Todos los derechos reservados GranaWeb &copy; 2022</small></p>
+        </footer>
+
     </body>
+   
+    
 </html>

@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use App\Entity\Carrito;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -30,6 +31,8 @@ class UserFixtures extends Fixture
             $user,
             'Toor_2020'
         ));
+        $carrito = new Carrito();
+        $user->setCarrito($carrito);
         $manager->persist($user);
 
         $manager->flush();

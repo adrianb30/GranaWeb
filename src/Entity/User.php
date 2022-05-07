@@ -58,9 +58,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $direccion;
 
     /**
-     * @ORM\OneToOne(targetEntity=Carrito::class, mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="Carrito", mappedBy="user", cascade={"persist", "remove"})
      */
+
+    // @ORM\OneToOne(targetEntity=Carrito::class, mappedBy="user", cascade={"persist", "remove"})
     private $carrito;
+
+
 
     public function getId(): ?int
     {
@@ -204,10 +208,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->carrito;
     }
 
-    public function setCarrito(Carrito $carrito): self
+    public function setCarrito(?Carrito $carrito): self
     {
+        // unset the owning side of the relation if necessary
+        if ($carrito === null && $this->carrito !== null) {
+            $this->carrito->setUser(null);
+        }
+
         // set the owning side of the relation if necessary
-        if ($carrito->getUser() !== $this) {
+        if ($carrito !== null && $carrito->getUser() !== $this) {
             $carrito->setUser($this);
         }
 
