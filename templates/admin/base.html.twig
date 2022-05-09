@@ -47,10 +47,15 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ path('app_admin_producto_index') }}">
-                                        <span data-feather="shopping-cart"></span>
-                                        Productos
-                                    </a>
+                                    <div class="dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Productos
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <li><a class="dropdown-item" href="{{ path('app_admin_producto_index')}}">Productos</a></li>
+                                            <li><a class="dropdown-item" href="{{ path('app_admin_categoria_index')}}">Categorias</a></li>
+                                        </ul>
+                                    </div>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ path('app_admin_user_index')}}">

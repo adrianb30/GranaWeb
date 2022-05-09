@@ -14,6 +14,10 @@
     <div class="form-group">
         {{ form_row(form.imagen) }}
     </div>
+    <div class="form-group">
+        <label>Seleccione un categoria</label>
+        {{ form_widget(form.categoria) }}
+    </div>
     <div class="form-group mt-2">
         <button class="btn btn-success form-control">{{ button_label|default('Guardar') }}</button>
     </div>

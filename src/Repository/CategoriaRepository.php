@@ -46,23 +46,22 @@ class CategoriaRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
+    
 
-    // /**
-    //  * @return Categoria[] Returns an array of Categoria objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Categoria[] Returns an array of Categoria objects
+     */
+    
+    public function getcategorias()
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $categorias = $this->findAll();
+        $allcategorias = array();
+        foreach ($categorias as $categoria => $value) {
+            $allcategorias+=[$value->getNombre()=>$value];
+        }
+        return $allcategorias;
     }
-    */
+    
 
     /*
     public function findOneBySomeField($value): ?Categoria

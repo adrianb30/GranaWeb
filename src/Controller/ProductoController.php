@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Producto;
 use App\Form\ProductoType;
 use App\Repository\ProductoRepository;
+use App\Repository\CategoriaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -30,12 +31,12 @@ class ProductoController extends AbstractController
     /**
      * @Route("/new", name="app_admin_producto_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, ProductoRepository $productoRepository): Response
+    public function new(Request $request, ProductoRepository $productoRepository,CategoriaRepository $categoriarepository): Response
     {
         $producto = new Producto();
         $form = $this->createForm(ProductoType::class, $producto);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $dirIMG */
             $dirIMG= $form['imagen']->getData();
@@ -62,6 +63,7 @@ class ProductoController extends AbstractController
                 // instead of its contents
                 $producto->setImagen($newFilename);
             }
+            // echo $producto->getCategoria();
             $productoRepository->add($producto);
             return $this->redirectToRoute('app_admin_producto_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -69,6 +71,7 @@ class ProductoController extends AbstractController
         return $this->renderForm('producto/new.html.twig', [
             'producto' => $producto,
             'form' => $form,
+            'categorias' => $categoriarepository->getCategorias(),
         ]);
     }
 
@@ -140,6 +143,7 @@ class ProductoController extends AbstractController
             $productoRepository->remove($producto);
         }
 
-        return $this->redirectToRoute('app_producto_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_admin_producto_index', [], Response::HTTP_SEE_OTHER);
     }
+
 }
