@@ -18,9 +18,9 @@
         </section>
         <div class="album py-5 bg-light">
             <div class="container">
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                <div class="row">
                     {% for producto in productos %}
-                        <div class="col">
+                        <div class="col-xs-12 col-lg-4 col-md-12 col-sm-4 ">
                             <div class="card shadow-sm">
                                 {# <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg> #}
                                 <a class="bd-placeholder-img card-img-top"  href="{{ path('app_tienda_show', {'id': producto.id}) }}"><img width="100%" height="50%" src="{{ asset('uploads/img/' ~ producto.imagen) }}"></a>
@@ -28,7 +28,7 @@
                                 <p class="card-text">{{ producto.nombre }}</p>
                                     <div class="row justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary col-6">Ver más</button>
+                                            <a href="{{ path('app_tienda_show', {'id': producto.id}) }}" class="btn btn-sm btn-outline-secondary col-6">Ver más</a>
                                             <button type="button" class="btn btn-sm btn-outline-secondary col-6">comprar</button>
                                         </div>
                                     </div>

@@ -88,7 +88,7 @@ class ProductoController extends AbstractController
     /**
      * @Route("/{id}/edit", name="app_admin_producto_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Producto $producto, ProductoRepository $productoRepository): Response
+    public function edit(Request $request, Producto $producto, ProductoRepository $productoRepository, CategoriaRepository $categoriarepository): Response
     {
         $form = $this->createForm(ProductoType::class, $producto);
         $form->handleRequest($request);
@@ -131,6 +131,7 @@ class ProductoController extends AbstractController
         return $this->renderForm('producto/edit.html.twig', [
             'producto' => $producto,
             'form' => $form,
+            'categorias' => $categoriarepository->getCategorias(),
         ]);
     }
 
