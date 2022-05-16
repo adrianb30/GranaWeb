@@ -61,7 +61,7 @@
                           </form>
                         </div>
                         <div style="width: 80px;">
-                          <h5 class="mb-0">{{ producto.precio }} €</h5>
+                          <h5 class="mb-0">{{ cart.total }} €</h5>
                         </div>
                         <form method="post" action="{{ path('app_carrito_items_delete', {'id': cart.id}) }}" onsubmit="return confirm('Se eliminara {{ producto.nombre }} del carrito ¿Quiere continuar?');">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ cart.id) }}">

@@ -34,6 +34,7 @@ class TiendaController extends AbstractController
                 foreach ($detallecarrito->getProducto() as $key) {
                     if ($key->getId() == $producto->getId()) {
                         $detallecarrito->setCantidad($detallecarrito->getCantidad()+1);
+                        $detallecarrito->setTotal($detallecarrito->getCantidad()*$producto->getPrecio());
                         $check=false;
                         break;
                     }
@@ -93,21 +94,30 @@ class TiendaController extends AbstractController
     /**
      * @Route("/checkout", name="app_carrito")
      */
-    public function carrito(CarritoDetalleRepository $CarritoDetalleRepository): Response
+    public function carrito(CarritoDetalleRepository $CarritoDetalleRepository, ProductoRepository $productoRepository): Response
     {
         
         // $carrito=$CarritoDetalleRepository->findBy(['carrito' => $this->getUser()->getCarrito()->getId()]);
         
         
         if (isset($_POST['sum_carrito'])) {
-            
-            $carrito=$CarritoDetalleRepository->find([ 'id' => $_POST["id_producto"]]);
+            $carrito=$CarritoDetalleRepository->find(['id' => $_POST["id_producto"]]);
+            $productos=$carrito->getProducto();
             $carrito->setCantidad($carrito->getCantidad()+1);
+            foreach ($productos as $producto) {
+                $carrito->setTotal($carrito->getCantidad() * $producto->getPrecio());
+            }
+            
             $CarritoDetalleRepository->add($carrito);
         }
         if (isset($_POST['rest_carrito'])) {
             $carrito=$CarritoDetalleRepository->find([ 'id' => $_POST["id_producto"]]);
+            $productos=$carrito->getProducto();
             $carrito->setCantidad($carrito->getCantidad()-1);
+            foreach ($productos as $producto) {
+                $carrito->setTotal($carrito->getCantidad() * $producto->getPrecio());
+            }
+            
             $CarritoDetalleRepository->add($carrito);
             if ($carrito->getCantidad()==0) {
                 $CarritoDetalleRepository->remove($carrito);
