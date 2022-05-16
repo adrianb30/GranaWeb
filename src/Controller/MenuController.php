@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Security;
+use App\Repository\CarritoDetalleRepository;
 
 class MenuController extends AbstractController
 {
@@ -17,7 +18,7 @@ class MenuController extends AbstractController
      * @var String $route_name
      *   Machine name of a route
      */
-    public function mainMenu(String $route_name)
+    public function mainMenu(String $route_name,CarritoDetalleRepository $CarritoDetalleRepository)
     {
         $items['inicio']['title'] = 'Inicio';
         $items['inicio']['url'] = $this->generateUrl('app_tienda');
@@ -26,6 +27,8 @@ class MenuController extends AbstractController
         }
         if( $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY') ) {
             // Only for authenticated users
+            $array=$CarritoDetalleRepository->countItems($this->getUser()->getCarrito()->getId());
+            $result_fin=$array[0];
             $special['Mi perfil']['title'] = 'Mi Perfil';
             $special['Mi perfil']['url'] = $this->generateUrl('app_perfil');
             if ($route_name == 'Mi Cuenta') {
@@ -36,6 +39,13 @@ class MenuController extends AbstractController
             if ($route_name == 'cerrar_sesion') {
                 $special['cerrar_sesion']['class'] = "active";
             }
+            $carritos['carrito']['title'] = 'carrito';
+            $carritos['carrito']['url'] = $this->generateUrl('app_carrito');
+            $carritos['carrito']['count'] = $result_fin;
+            if ($route_name == 'carrito') {
+                $carritos['carrito']['class'] = "active";
+                
+            }
             
         } else {
             $items['inicio_sesion']['title'] = 'Inicio de Sesión';
@@ -44,6 +54,7 @@ class MenuController extends AbstractController
                 $items['inicio_sesion']['class'] = "active";
             }
             $special= null;
+            $carritos= null;
         }
         if ($this->security->isGranted('ROLE_ADMIN')) {
             $items['administracion']['title'] = 'Administracion';
@@ -62,7 +73,8 @@ class MenuController extends AbstractController
 
         return $this->render('menu/_main.html.twig', [
             'items' => $items,
-            'specials' => $special
+            'specials' => $special,
+            'carritos' => $carritos,
         ]);
     }
 

@@ -46,6 +46,33 @@ class CarritoDetalleRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
+    public function countItems($id)
+    {
+        return $this->createQueryBuilder('fc')
+            ->andWhere('fc.carrito = :carrito')
+            ->setParameter('carrito', $id)
+            ->select('Count(fc.id) as total_Items')
+            ->getQuery()
+            ->getResult();
+    }
+     /**
+     * @return CarritoDetalle[] Returns an array of CarritoDetalle objects
+     */
+    
+    public function findByCarritoProducto($value1,$value2)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.producto = :val1 and c.carrito = :val2')
+            ->setParameter('val1', $value1)
+            ->setParameter('val2', $value2)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    
+
+
+
 
     // /**
     //  * @return CarritoDetalle[] Returns an array of CarritoDetalle objects

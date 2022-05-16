@@ -1,9 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello TiendaController!{% endblock %}
+{% block title %}GranaWeb{% endblock %}
 
 {% block body %}
     <main>
+        {% if mensaje is defined %}
+        <div class="container">
+            <diV class="row">
+                <div class="alert alert-success  alert-dismissible fade show col-12 rounder-5 mt-3" role="alert">
+                    {{ mensaje}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+        {% endif %}
         <section class="py-5 text-center container">
             <div class="row py-lg-5">
             <div class="col-lg-6 col-md-8 mx-auto">
@@ -29,7 +39,10 @@
                                     <div class="row justify-content-between align-items-center">
                                         <div class="btn-group">
                                             <a href="{{ path('app_tienda_show', {'id': producto.id}) }}" class="btn btn-sm btn-outline-secondary col-6">Ver más</a>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary col-6">comprar</button>
+                                            <form method="POST" class="col-6">
+                                                <input type="hidden" name="producto" value="{{ producto.id }}">
+                                                <button type="submit" name="btn_carrito" class="btn btn-sm btn-outline-secondary col-12">Añadir al carrito</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>

@@ -13,22 +13,35 @@
                     </li>
                 {% endfor %}
                 {% if specials != null %}
-                <li class="nav-item dropdown">
-                    <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <strong>Mi Cuenta</strong>
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    
-                        {% for special in specials %}
-                            <li><a class="dropdown-item" href="{{ special.url }}"><strong>{{ special.title }}</strong></a></li>
-                        {% endfor %}
-                    
-                        {# <li><a class="dropdown-item" href="#"><strong>RAM</strong></a></li> #}
-                        {# <li><hr class="dropdown-divider"></li> #}
-                        {# <li><a class="dropdown-item" href="#">Something else here</a></li> #}
-                    </ul>
-                </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <strong>Mi Cuenta</strong>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        
+                            {% for special in specials %}
+                                <li><a class="dropdown-item" href="{{ special.url }}"><strong>{{ special.title }}</strong></a></li>
+                            {% endfor %}
+                        
+                            {# <li><a class="dropdown-item" href="#"><strong>RAM</strong></a></li> #}
+                            {# <li><hr class="dropdown-divider"></li> #}
+                            {# <li><a class="dropdown-item" href="#">Something else here</a></li> #}
+                        </ul>
+                    </li>
                 {% endif %}
+                {% if carritos != null %}
+                    {% for carrito in carritos %}
+                    <li class="nav-item {% if carrito.class is defined %}{{ carrito.class }}{% endif %}">
+                        <a class="nav-link active " href="{{ carrito.url }}"><strong><i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="badge bg-primary rounded-pill">
+                        {% for total in carrito.count %}
+                            {{ total}}
+                        {% else %}
+                            {{ "(0)" }}
+                        {% endfor %}</span></strong></a>
+                    </li>
+                    {% endfor %}
+                {% endif %}
+                
             </ul>
             <form class="d-flex" method="post">
                 <input class="form-control me-2" type="search" placeholder="¿Qué estas buscando?" name="clave" id="clave" aria-label="Search">

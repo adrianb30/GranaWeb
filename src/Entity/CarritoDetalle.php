@@ -20,13 +20,13 @@ class CarritoDetalle
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=carrito::class)
+     * @ORM\ManyToOne(targetEntity=Carrito::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $carrito;
 
     /**
-     * @ORM\ManyToMany(targetEntity=producto::class)
+     * @ORM\ManyToMany(targetEntity=Producto::class)
      */
     private $producto;
 
@@ -50,12 +50,12 @@ class CarritoDetalle
         return $this->id;
     }
 
-    public function getCarrito(): ?carrito
+    public function getCarrito(): ?Carrito
     {
         return $this->carrito;
     }
 
-    public function setCarrito(?carrito $carrito): self
+    public function setCarrito(?Carrito $carrito): self
     {
         $this->carrito = $carrito;
 

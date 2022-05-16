@@ -1,0 +1,351 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Carrito{% endblock %}
+
+{% block body %}
+{# {{ dump(carrito)}} #}
+<section class="h-100 h-custom" style="background-color: grey;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col">
+        <div class="card">
+          <div class="card-body p-4">
+
+            <div class="row">
+
+              <div class="col-lg-7">
+                <h5 class="mb-3"><a href="{{ path('app_tienda') }}" class="text-body"><i
+                      class="fas fa-long-arrow-alt-left me-2"></i>Continuar comprando</a></h5>
+                <hr>
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                  <div>
+                    <p class="mb-1">Shopping cart</p>
+                    <p class="mb-0">Tienes 
+                    {% for count in total_items %}
+                        {{ count }}
+                      {% else %}
+                        {{ 0 }}
+                    {% endfor %}
+                     articulos en tu carrito</p>
+                  </div>
+                  <div>
+                    <p class="mb-0"><span class="text-muted">Ordenar por:</span> <a href="#!"
+                        class="text-body">precio <i class="fas fa-angle-down mt-1"></i></a></p>
+                  </div>
+                </div>
+                
+                {% for cart in carrito %}
+                  {% for producto in cart.producto %}
+                    {% set total = total + (producto.precio * cart.cantidad) %}
+                <div class="card mb-3">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <div class="d-flex flex-row align-items-center">
+                        <div>
+                          <img src="{{ asset('uploads/img/' ~ producto.imagen)}}" class="img-fluid rounded-3" alt="Shopping item" style="width: 65px;">
+                        </div>
+                        <div class="ms-3">
+                          <h5>{{producto.nombre}}</h5>
+                          {# <p class="small mb-0">256GB, Navy Blue</p> #}
+                        </div>
+                      </div>
+                      <div class="d-flex flex-row align-items-center">
+                        <div style="width: 100px; margin-right: 20px;">
+                          <form class="d-flex " method="POST">
+                            <input class="btn btn-success p-1" style="width: 30px;" type="submit" name="sum_carrito" value="+">
+                            <input type="hidden" value="{{cart.id}}" name="id_producto">
+                            <input class="fw-normal mb-0 text-center border-0" style="width: 30px;" name="cantidad" type="text" value="{{ cart.cantidad}}" readonly>
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ cart.id) }}">
+                            <input class="btn btn-success p-1" style="width: 30px;" type="submit" name="rest_carrito" value="-">
+                          </form>
+                        </div>
+                        <div style="width: 80px;">
+                          <h5 class="mb-0">{{ producto.precio }} €</h5>
+                        </div>
+                        <form method="post" action="{{ path('app_carrito_items_delete', {'id': cart.id}) }}" onsubmit="return confirm('Se eliminara {{ producto.nombre }} del carrito ¿Quiere continuar?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ cart.id) }}">
+                            <button class="btn btn-danger rounded-2"><i class="fas fa-trash-alt"></i></button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                  {% endfor %}
+                {% endfor %}
+              </div>
+              <div class="col-lg-5">
+
+                <div class="card bg-dark text-white rounded-3">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                      <h5 class="mb-0">Detalles del Carrito</h5>
+                      {# <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
+                        class="img-fluid rounded-3" style="width: 45px;" alt="Avatar"> #}
+                    </div>
+
+                    <p class="small mb-2">Tarjetas de credito</p>
+                    <a href="#!" type="submit" class="text-white"><i
+                        class="fab fa-cc-mastercard fa-2x me-2"></i></a>
+                    <a href="#!" type="submit" class="text-white"><i
+                        class="fab fa-cc-visa fa-2x me-2"></i></a>
+                    <a href="#!" type="submit" class="text-white"><i
+                        class="fab fa-cc-amex fa-2x me-2"></i></a>
+                    <a href="#!" type="submit" class="text-white"><i class="fab fa-cc-paypal fa-2x"></i></a>
+
+                    <form class="mt-4">
+                      <div class="form-outline form-white mb-4">
+                        <input type="text" id="typeName" class="form-control form-control-lg" siez="17"
+                          placeholder="Cardholder's Name" />
+                        <label class="form-label" for="typeName">Nombre</label>
+                      </div>
+
+                      <div class="form-outline form-white mb-4">
+                        <input type="text" id="typeText" class="form-control form-control-lg" siez="17"
+                          placeholder="1234 5678 9012 3457" minlength="19" maxlength="19" />
+                        <label class="form-label" for="typeText">Número de tarjeta</label>
+                      </div>
+
+                      <div class="row mb-4">
+                        <div class="col-md-6">
+                          <div class="form-outline form-white">
+                            <input type="text" id="typeExp" class="form-control form-control-lg"
+                              placeholder="MM/YYYY" size="7" id="exp" minlength="7" maxlength="7" />
+                            <label class="form-label" for="typeExp">Validez</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-outline form-white">
+                            <input type="password" id="typeText" class="form-control form-control-lg"
+                              placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3" maxlength="3" />
+                            <label class="form-label" for="typeText">CVV</label>
+                          </div>
+                        </div>
+                      </div>
+
+                    </form>
+
+                    <hr class="my-4">
+
+                    {# <div class="d-flex justify-content-between">
+                      <p class="mb-2">Subtotal</p>
+                      <p class="mb-2">$4798.00</p>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                      <p class="mb-2">Shipping</p>
+                      <p class="mb-2">$20.00</p>
+                    </div> #}
+
+                    <div class="d-flex justify-content-between mb-4">
+                      <p class="mb-2">Total(IVA Incl.)</p>
+                      <p class="mb-2">{{ total }}€</p>
+                    </div>
+
+                    <button type="button" class="btn btn-outline-primary btn-block btn-lg">
+                      <div class="d-flex justify-content-between">
+                        <span>Pagar todo <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
+                      </div>
+                    </button>
+
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <main>
+    <div class="py-5 text-center">
+      <h1>Finalizar compra en <strong class="text-primary">Grana</strong>Web</h1>
+      <p class="lead">A continuacion se procedera a la compra de los articulos almacenados en el carrito</p>
+    </div>
+
+    <div class="row g-5">
+      <div class="col-md-5 col-lg-4 order-md-last">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-primary">Your cart</span>
+          <span class="badge bg-primary rounded-pill">
+          {% for count in total_items %}
+              {{ count }}
+            {% else %}
+              {{ 0 }}
+          {% endfor %}
+          </span>
+        </h4>
+        <ul class="list-group mb-3">
+        {% set total = 0 %}
+          {% for cart in carrito %}
+            {% for producto in cart.producto %}
+                {% set total = total + (producto.precio * cart.cantidad) %}
+            
+            
+              <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">{{producto.nombre}}</h6>
+              <small class="text-muted">Brief description</small>
+            </div>
+            <span class="text-muted">{{producto.precio}} €</span>
+            
+          </li>
+          {% endfor %}
+          {% endfor %}
+          <li class="list-group-item d-flex justify-content-between">
+            <span>Total (EUR)</span>
+            <strong>{{ total }} €</strong>
+          </li>
+        </ul>
+
+        {# <form class="card p-2">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Promo code">
+            <button type="submit" class="btn btn-secondary">Redeem</button>
+          </div>
+        </form> #}
+      </div>
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">Billing address</h4>
+        <form class="needs-validation" novalidate>
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="nombre" placeholder="" value="{{user.nombre}}" required>
+              <div class="invalid-feedback">
+                Valid first name is required.
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <label for="apellido" class="form-label">Apellido</label>
+              <input type="text" class="form-control" id="apellido" placeholder="" value="{{user.apellidos}}" required>
+              <div class="invalid-feedback">
+                Valid last name is required.
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="DNI" class="form-label">DNI</label>
+              <div class="input-group has-validation">
+                <span class="input-group-text"><i class="fa fa-id-card" aria-hidden="true"></i></span>
+                <input type="text" class="form-control" id="DNI" placeholder="DNI" value="{{user.dni}}" required>
+              <div class="invalid-feedback">
+                  Your username is required.
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="email" class="form-label">Correo de facturación</label>
+              <div class="input-group has-validation">
+                <span class="input-group-text">@</i></span>
+              <input type="email" class="form-control" id="email" placeholder="you@example.com" value="{{ user.email }}">
+              <div class="invalid-feedback">
+                  Your username is required.
+                </div>
+              </div>
+              
+              <div class="invalid-feedback">
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="address" class="form-label">Address</label>
+              <input type="text" class="form-control" id="address" placeholder="C\De la Piruleta, Ciudad, 18200" value="{{user.direccion}}" required>
+              <div class="invalid-feedback">
+              </div>
+            </div>
+
+          {# <hr class="my-4">
+
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="same-address">
+            <label class="form-check-label" for="same-address">Shipping address is the same as my billing address</label>
+          </div>
+
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="save-info">
+            <label class="form-check-label" for="save-info">Save this information for next time</label>
+          </div> #}
+
+          <hr class="my-4">
+
+          <h4 class="mb-3">Payment</h4>
+
+          <div class="my-3">
+            <div class="form-check">
+              <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
+              <label class="form-check-label" for="credit">Credit card</label>
+            </div>
+            <div class="form-check">
+              <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
+              <label class="form-check-label" for="debit">Debit card</label>
+            </div>
+            <div class="form-check">
+              <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
+              <label class="form-check-label" for="paypal">PayPal</label>
+            </div>
+          </div>
+
+          <div class="row gy-3">
+            <div class="col-md-6">
+              <label for="cc-name" class="form-label">Name on card</label>
+              <input type="text" class="form-control" id="cc-name" placeholder="" required>
+              <small class="text-muted">Full name as displayed on card</small>
+              <div class="invalid-feedback">
+                Name on card is required
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="cc-number" class="form-label">Credit card number</label>
+              <input type="text" class="form-control" id="cc-number" placeholder="" required>
+              <div class="invalid-feedback">
+                Credit card number is required
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label for="cc-expiration" class="form-label">Expiration</label>
+              <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
+              <div class="invalid-feedback">
+                Expiration date required
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label for="cc-cvv" class="form-label">CVV</label>
+              <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
+              <div class="invalid-feedback">
+                Security code required
+              </div>
+            </div>
+          </div>
+
+          <hr class="my-4">
+
+          <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer class="my-5 pt-5 text-muted text-center text-small">
+    <p class="mb-1">&copy; 2017–2021 Company Name</p>
+    <ul class="list-inline">
+      <li class="list-inline-item"><a href="#">Privacy</a></li>
+      <li class="list-inline-item"><a href="#">Terms</a></li>
+      <li class="list-inline-item"><a href="#">Support</a></li>
+    </ul>
+  </footer>
+</div>
+
+
+{% endblock %}

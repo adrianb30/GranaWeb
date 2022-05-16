@@ -38,7 +38,10 @@
                         <span class="text-success"><strong>{{ producto.stock}} Stock</strong> </span>
                     </div>	
                     <div class="buttons d-flex flex-row mt-5 gap-3">
-                        <button class="btn btn-dark">Añadir al carrito</button>
+                        <form method="POST">
+                            <input type="hidden" name="producto" value="{{ producto.id }}">
+                            <button class="btn btn-dark" name="btn_carrito">Añadir al carrito</button>
+                        </form>
                     </div>	
                 </div>
             </div>
