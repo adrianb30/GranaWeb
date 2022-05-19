@@ -82,6 +82,16 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         return $user;
     }
+    public function getUsers()
+    {
+        $users = $this->findAll();
+        $allusers = array();
+        foreach ($users as $user => $value) {
+            $allusers+=[$value->getNombre()." ".$value->getApellidos() => $value->getId()];
+        }
+
+        return $allusers;
+    }
     
     // /**
     //  * @return User[] Returns an array of User objects

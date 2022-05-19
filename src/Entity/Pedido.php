@@ -55,14 +55,14 @@ class Pedido
         return $this->id;
     }
 
-    public function getFecha(): ?\DateTimeInterface
+    public function getFecha()
     {
         return $this->fecha;
     }
 
-    public function setFecha(\DateTimeInterface $fecha): self
+    public function setFecha( $fecha): self
     {
-        $this->fecha = $fecha;
+        $this->fecha = $fecha = new \DateTime();
 
         return $this;
     }
