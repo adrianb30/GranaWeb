@@ -51,7 +51,16 @@ class CarritoDetalleRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('fc')
             ->andWhere('fc.carrito = :carrito')
             ->setParameter('carrito', $id)
-            ->select('Count(fc.id) as total_Items')
+            ->select('sum(fc.cantidad) as total_Items')
+            ->getQuery()
+            ->getResult();
+    }
+    public function getPrecioTotal($id)
+    {
+        return $this->createQueryBuilder('fc')
+            ->andWhere('fc.carrito = :carrito')
+            ->setParameter('carrito', $id)
+            ->select('sum(fc.total) as total_Items')
             ->getQuery()
             ->getResult();
     }

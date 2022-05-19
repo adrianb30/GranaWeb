@@ -29,6 +29,8 @@ class MenuController extends AbstractController
             // Only for authenticated users
             $array=$CarritoDetalleRepository->countItems($this->getUser()->getCarrito()->getId());
             $result_fin=$array[0];
+            $tmp=$CarritoDetalleRepository->getPrecioTotal($this->getUser()->getCarrito()->getId());
+            $total=$tmp[0];
             $special['Mi perfil']['title'] = 'Mi Perfil';
             $special['Mi perfil']['url'] = $this->generateUrl('app_perfil');
             if ($route_name == 'Mi Cuenta') {
@@ -42,6 +44,7 @@ class MenuController extends AbstractController
             $carritos['carrito']['title'] = 'carrito';
             $carritos['carrito']['url'] = $this->generateUrl('app_carrito');
             $carritos['carrito']['count'] = $result_fin;
+            $carritos['carrito']['total'] = $total;
             if ($route_name == 'carrito') {
                 $carritos['carrito']['class'] = "active";
                 

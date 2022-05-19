@@ -3,7 +3,6 @@
 {% block title %}Añadir Producto{% endblock %}
 
 {% block body %}
-{{ dump(categorias) }}
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center ">
       <div class="col-12 col-md-11 col-lg-10 col-xl-9">
@@ -12,7 +11,7 @@
                 <h1 class="text-center">Añadir Nuevo Producto</h1>
                 <hr>
                 {{ include('producto/_form.html.twig') }}
-                <a class="btn btn-outline-secondary" href="{{ path('app_admin_producto_index') }}">back to list</a>
+                <a class="btn btn-outline-secondary" href="{{ path('app_admin_producto_index') }}">Volver</a>
             </div>
           </div>
         </div>

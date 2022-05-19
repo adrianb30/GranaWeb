@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 /**
- * @Route("/backofice/user")
+ * @Route("/backoffice/user")
  */
 class UserController extends AbstractController
 {

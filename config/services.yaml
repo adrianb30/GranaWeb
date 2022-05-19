@@ -6,6 +6,9 @@
 parameters:
     app.admin_email: 'abargom082@g.educaand.es'
     imagen_directory: '%kernel.project_dir%/public/uploads/img'
+    paypal.business: '%env(PAYPAL_BUSINESS)%'
+    paypal.token: '%env(PAYPAL_TOKEN)%'
+    paypal.host: '%env(PAYPAL_HOST)%'
 services:
     # default configuration for services in *this* file
     _defaults:

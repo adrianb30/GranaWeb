@@ -65,9 +65,29 @@ class TiendaController extends AbstractController
     public function show(Producto $producto, ProductoRepository $productoRepository, CarritoDetalleRepository $CarritoDetalleRepository): Response
     {
         if (isset($_POST['btn_carrito'])) {
+            $check=true;
             $producto = $productoRepository->findOneBy(['id'=>$_POST["producto"]]);
-            //var_dump($producto);
-            $mensaje = $this->add_carrito($producto,$CarritoDetalleRepository);
+            $carrito=$CarritoDetalleRepository->findby(['carrito'=>$this->getUser()->getCarrito()->getId()]);
+            foreach ($carrito as $detallecarrito) {
+                foreach ($detallecarrito->getProducto() as $key) {
+                    if ($key->getId() == $producto->getId()) {
+                        $detallecarrito->setCantidad($detallecarrito->getCantidad()+1);
+                        $detallecarrito->setTotal($detallecarrito->getCantidad()*$producto->getPrecio());
+                        $check=false;
+                        break;
+                    }
+                }
+            }
+            if (empty($carrito)) {
+                $mensaje = $this->add_carrito($producto,$CarritoDetalleRepository);
+            } else {
+                if ($check == true) {
+                    $mensaje = $this->add_carrito($producto,$CarritoDetalleRepository);
+                } else {
+                    $CarritoDetalleRepository->add($detallecarrito);
+                    $mensaje="Este producto ya existe en el carrito se ha actualizado la cantidad";
+                }
+            }
         }
         return $this->render('tienda/producto.html.twig', [
             'producto' => $producto,

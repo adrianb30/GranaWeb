@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -63,6 +65,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     // @ORM\OneToOne(targetEntity=Carrito::class, mappedBy="user", cascade={"persist", "remove"})
     private $carrito;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Pedido::class, mappedBy="usuario", orphanRemoval=true)
+     */
+    private $pedidos;
+
+    public function __construct()
+    {
+        $this->pedidos = new ArrayCollection();
+    }
 
 
 
@@ -221,6 +233,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         $this->carrito = $carrito;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Pedido>
+     */
+    public function getPedidos(): Collection
+    {
+        return $this->pedidos;
+    }
+
+    public function addPedido(Pedido $pedido): self
+    {
+        if (!$this->pedidos->contains($pedido)) {
+            $this->pedidos[] = $pedido;
+            $pedido->setUsuario($this);
+        }
+
+        return $this;
+    }
+
+    public function removePedido(Pedido $pedido): self
+    {
+        if ($this->pedidos->removeElement($pedido)) {
+            // set the owning side to null (unless already changed)
+            if ($pedido->getUsuario() === $this) {
+                $pedido->setUsuario(null);
+            }
+        }
 
         return $this;
     }

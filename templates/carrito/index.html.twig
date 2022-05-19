@@ -19,8 +19,8 @@
                 <td>{{ carrito.id }}</td>
                 <td>{{ carrito.total }}</td>
                 <td>
-                    <a href="{{ path('app_carrito_show', {'id': carrito.id}) }}">show</a>
-                    <a href="{{ path('app_carrito_edit', {'id': carrito.id}) }}">edit</a>
+                    <a href="{{ path('app_carrito_show', {'id': carrito.id}) }}">Ver</a>
+                    <a href="{{ path('app_carrito_edit', {'id': carrito.id}) }}">Editar</a>
                 </td>
             </tr>
         {% else %}

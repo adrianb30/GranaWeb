@@ -32,12 +32,28 @@
                 {% if carritos != null %}
                     {% for carrito in carritos %}
                     <li class="nav-item {% if carrito.class is defined %}{{ carrito.class }}{% endif %}">
-                        <a class="nav-link active " href="{{ carrito.url }}"><strong><i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="badge bg-primary rounded-pill">
-                        {% for total in carrito.count %}
-                            {{ total}}
-                        {% else %}
-                            {{ "(0)" }}
-                        {% endfor %}</span></strong></a>
+                        <a class="nav-link active d " href="{{ carrito.url }}">
+                            <strong><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                <span class="badge bg-primary rounded-pill">
+                                    {% for total in carrito.count %}
+                                        {% if total == null %}
+                                            (0)
+                                        {% else %}
+                                            ({{ total }})
+                                        {% endif %}
+                                    {% endfor %}
+                                    - Total:
+                                    {% for total2 in carrito.total %}
+                                        {% if total2 == null %}
+                                            0€
+                                        {% else %}
+                                            {{ total2 }}€
+                                        {% endif %}
+                                    {% endfor %}
+                                </span>
+                            </strong>
+                            
+                        </a>
                     </li>
                     {% endfor %}
                 {% endif %}
