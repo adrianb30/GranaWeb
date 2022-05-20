@@ -41,7 +41,7 @@ class Pedido
     private $transaccionid;
 
     /**
-     * @ORM\OneToMany(targetEntity=DetallePedido::class, mappedBy="Pedido", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=DetallePedido::class, mappedBy="pedido", orphanRemoval=true)
      */
     private $detallePedidos;
 

@@ -4,18 +4,19 @@
 
 {% block body %}
 
-    <div class="container py-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center ">
-      <div class="col-12 col-md-11 col-lg-10 col-xl-9">
-        <div class="card bg-dark text-white" style="border-radius: 1rem;">
-            <div class="card-body p-5 text-center">
-                <h1 class="text-center">Nuevo Pedido</h1>
-                <hr>
-                {{ include('pedido/_form.html.twig') }}
-                <a class="btn btn-outline-secondary" href="{{ path('app_pedido_index') }}">Volver</a>
-            </div>
+<div class="container py-5 h-100">
+  <div class="row d-flex justify-content-center align-items-center ">
+    <div class="col-12 col-md-11 col-lg-10 col-xl-9">
+      <div class="card bg-dark text-white" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+              <h1 class="text-center">Nuevo Pedido</h1>
+              <hr>
+              {{ include('pedido/_form.html.twig') }}
+              <a class="btn btn-outline-secondary" href="{{ path('app_pedido_index') }}">Volver</a>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</div>
 {% endblock %}

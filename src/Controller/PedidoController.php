@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\DetallePedido;
+use App\Repository\DetallePedidoRepository;
 
 /**
  * @Route("/backoffice/pedido")
@@ -32,7 +33,7 @@ class PedidoController extends AbstractController
     /**
      * @Route("/new", name="app_pedido_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, PedidoRepository $pedidoRepository, UserRepository $UserRepository, ProductoRepository $ProductoRepository): Response
+    public function new(Request $request, PedidoRepository $pedidoRepository, UserRepository $UserRepository, ProductoRepository $ProductoRepository, DetallePedidoRepository $DetallePedidoRepository): Response
     {
         $pedido = new Pedido();
         $time = strtotime('now');
@@ -41,31 +42,26 @@ class PedidoController extends AbstractController
         
         //echo $fecha->format('Y M D') ;
         if (isset($_POST['crear'])) {
-            //print_r($_POST);
-            
+            $parada=(count($_POST)-2)/2;
             $pedido->setUsuario($UserRepository->findOneBy(['id'=> $_POST['cliente']]));
             $pedido->setFecha($time);
             $pedido->setEstado('Pendiente');
+            $pedido->setTransaccionid("13k2h98khjw09sfd");
             $pedidoRepository->add($pedido);
             $cont=1;
-
-            for ($i=1; $i < count($_POST)-2; $i++) {
+            for ($i=1; $i <= $parada; $i++) {
                 $detallepedido=new DetallePedido();
                 $producto=$ProductoRepository->findOneBy(['id'=>$_POST['producto'.$i]]);
                 $detallepedido->setCantidad($_POST['cantidadproducto'.$i]);
                 $detallepedido->addProducto($producto);
                 $total=$producto->getPrecio()*$_POST['cantidadproducto'.$i];
                 $detallepedido->setTotal($total);
+                
                 $detallepedido->setPedido($pedido);
-                $detallepedido->add($pedido);
-
+                $DetallePedidoRepository->add($detallepedido);
             }
-            
-
-            
-            //$detallepedido->setCantidad($_POST);
-            
-            //return $this->redirectToRoute('app_pedido_index', [], Response::HTTP_SEE_OTHER);
+                        
+            return $this->redirectToRoute('app_pedido_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('pedido/new.html.twig', [
@@ -90,17 +86,10 @@ class PedidoController extends AbstractController
      */
     public function edit(Request $request, Pedido $pedido, PedidoRepository $pedidoRepository): Response
     {
-        $form = $this->createForm(PedidoType::class, $pedido);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $pedidoRepository->add($pedido);
-            return $this->redirectToRoute('app_pedido_index', [], Response::HTTP_SEE_OTHER);
-        }
+        
 
         return $this->renderForm('pedido/edit.html.twig', [
             'pedido' => $pedido,
-            'form' => $form,
         ]);
     }
 
