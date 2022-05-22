@@ -8,6 +8,7 @@
     <div class="col-12 col-md-11 col-lg-10 col-xl-9">
       <div class="card bg-dark text-white" style="border-radius: 1rem;">
           <div class="card-body p-5 text-center text-white">
+            
             <h1>Editar estado del Pedido | #{{ pedido.id}}</h1>
             <div class="container mt-lg-5 mb-lg-5">
                 <div class="row">
@@ -21,7 +22,7 @@
                     <thead>
                         <tr>
                             <th>Estado actual:</th>
-                            <th>Seleccione el estado nuevo:</th>
+                            <th>Nuevo estado:</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -29,7 +30,7 @@
                             <td scope="row">{{ pedido.estado}}</td>
                             <td>
                                 <select class="form-control" name="estado" id="estado">
-                                    <option selected disabled value={{ pedido.estado}}>{{pedido.estado}}</option>
+                                    <option selected disabled value={{ pedido.estado}}>- Seleccione el nuevo estado -</option>
                                     <option value="Pendiente">Pendiente</option>
                                     <option value="Pagado">Pagado</option>
                                     <option value="Preparado">Preparado</option>
@@ -37,11 +38,17 @@
                                 </select>
                             </td>
                         </tr>
+                        <tr>
+                            <td colspan="2">
+                                <input type="hidden" name="pedido_id" value="{{ pedido.id}}"> 
+                                <input  type="submit" class="btn btn-success form-control" value="Actualizar" name="btn_actualizar">
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
                 
             </form>
-            <a href="{{ path('app_pedido_index') }}">Volver</a>
+            <a class="btn btn-outline-secondary" href="{{ path('app_pedido_index') }}">Volver</a>
 
             {{ include('pedido/_delete_form.html.twig') }}
           </div>

@@ -14,7 +14,7 @@
       <div class="form-check d-flex">
         <select id="producto1" name="producto1" class="form-select">
             {% for producto in productos %}
-                <option value={{ producto.id }}>{{ producto.nombre}}</option>
+                <option value={{ producto.id }}>{{ producto.nombre}} (Stock: {{ producto.stock}})</option>
             {% endfor %}
         </select>
         <input class="form-control" name="cantidadproducto1" type="number" value="1"> 
@@ -31,7 +31,7 @@
             html += '<div class="form-check d-flex">';
             html += '<select id="producto'+contador+'" name="producto'+contador+'" class="form-select">';
             html += ' {% for producto in productos %}';
-            html += '<option value={{ producto.id }}>{{ producto.nombre}}</option>';
+            html += '<option value={{ producto.id }}>{{ producto.nombre}} (Stock: {{ producto.stock}})</option>';
             html += '{% endfor %}';
             html += '</select>';
             html += '<input class="form-control" name="cantidadproducto'+contador+'" type="number" value="1">';
