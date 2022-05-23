@@ -23,8 +23,8 @@
                 <td>{{ pedido.estado }}</td>
                 <td>{{ pedido.transaccionid }}</td>
                 <td>
-                    <a href="{{ path('app_pedido_show', {'id': pedido.id}) }}">show</a>
-                    <a href="{{ path('app_pedido_edit', {'id': pedido.id}) }}">edit</a>
+                    <a class="btn btn-outline-info" href="{{ path('app_pedido_show', {'id': pedido.id}) }}">Ver</a>
+                    <a class="btn btn-outline-success" href="{{ path('app_pedido_edit', {'id': pedido.id}) }}">Editar</a>
                 </td>
             </tr>
         {% else %}

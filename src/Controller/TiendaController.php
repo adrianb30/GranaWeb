@@ -9,7 +9,11 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Repository\ProductoRepository;
 use App\Repository\CarritoDetalleRepository;
 use App\Entity\Producto;
+use App\Entity\Pedido;
 use App\Entity\CarritoDetalle;
+use App\Repository\PedidoRepository;
+use App\Entity\DetallePedido;
+use App\Repository\DetallePedidoRepository;
 
 class TiendaController extends AbstractController
 {
@@ -163,5 +167,48 @@ class TiendaController extends AbstractController
         }
 
         return $this->redirectToRoute('app_carrito', [], Response::HTTP_SEE_OTHER);
+    }
+    
+    /**
+     * @Route("/verificador", name="crear_pedido")
+     */
+    public function crearPedido(Request $request,CarritoDetalleRepository $CarritoDetalleRepository,ProductoRepository $ProductoRepository, PedidoRepository $pedidoRepository, DetallePedidoRepository $DetallePedidoRepository)
+    {  
+        $totalfinal=0;
+        if ($_GET['status'] == 'COMPLETED') {
+            $totalcarrito=$CarritoDetalleRepository->findby(["carrito" =>  $this->getUser()->getCarrito()->getId()]);
+            $pedido=new pedido();
+            $time = strtotime('now');
+            $pedido->setUsuario($this->getUser());
+            $pedido->setFecha($time);
+            $pedido->setEstado($_GET['status']);
+            $pedido->setTransaccionid($_GET['paymentToken']);
+            
+            foreach ($totalcarrito as $detalles => $detalle) {
+                foreach ($detalle->getProducto() as $product) {
+                    if ($product->getStock() > 0 && $detalle->getCantidad() <= $product->getStock() ) {
+                        $pedidoRepository->add($pedido);
+                        $detallepedido=new DetallePedido();
+                        $detallepedido->setCantidad($detalle->getCantidad());
+                        $product->setStock($product->getStock() - $detalle->getCantidad());
+                        $ProductoRepository->add($product);
+                        $detallepedido->addProducto($product);
+                        $total=$product->getPrecio()*$detalle->getCantidad();
+                        $detallepedido->setTotal($total);
+                        $totalfinal+=$total;
+                        $detallepedido->setPedido($pedido);
+                        $producto=$detallepedido;
+                        $DetallePedidoRepository->add($detallepedido);
+                    } else {
+                        // array_push($mensaje,$product->getNombre().", cantidad disponible: ". $product->getStock());
+                    }
+                }               
+            }
+        }
+        
+        return $this->render('test.html.twig', [
+            'total' => $totalfinal,
+            'producto' => "",
+        ]);
     }
 }
