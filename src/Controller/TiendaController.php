@@ -150,9 +150,25 @@ class TiendaController extends AbstractController
         }
         $array=$CarritoDetalleRepository->countItems($this->getUser()->getCarrito()->getId());
         $result_fin=$array[0];
+        $ver=true;
+        foreach ($CarritoDetalleRepository->findBy(['carrito' => $this->getUser()->getCarrito()]) as $producto => $value) {
+            foreach ($value->getProducto() as $key) {
+                if ($key->getStock() > 0) {
+                    $ver=true;
+                } else {
+                    $ver=false;
+                    break;
+                }
+                if($ver==false){
+                    break;
+                }
+            }
+            
+        }
         return $this->render('tienda/checkout.html.twig', [
             'user' => $this->getUser(),
             'carrito' => $CarritoDetalleRepository->findBy(['carrito' => $this->getUser()->getCarrito()]),
+            'ver' => $ver,
             'total_items' => $result_fin,
             'total' => 0
         ]);
@@ -199,16 +215,19 @@ class TiendaController extends AbstractController
                         $detallepedido->setPedido($pedido);
                         $producto=$detallepedido;
                         $DetallePedidoRepository->add($detallepedido);
+                        $mensaje="Se ha completado la compra correctamente";
+                        $clase="bg-success";
                     } else {
                         // array_push($mensaje,$product->getNombre().", cantidad disponible: ". $product->getStock());
+                        $mensaje="No se ha completado la compra correctamente";
+                        $clase="bg-warning";
                     }
                 }               
             }
         }
-        
-        return $this->render('test.html.twig', [
-            'total' => $totalfinal,
-            'producto' => "",
+        return $this->render('tienda/verificacion.html.twig', [
+            'mensaje' => $mensaje,
+            'clase' => $clase,
         ]);
     }
 }

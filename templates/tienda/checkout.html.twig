@@ -3,7 +3,7 @@
 {% block title %}Carrito{% endblock %}
 
 {% block body %}
-{# {{ dump(carrito)}} #}
+{# {{ dump(ver)}} #}
   <section class="h-100 h-custom" style="background-color: grey;">
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
@@ -53,15 +53,22 @@
                                 </div>
                               </div>
                               <div class="d-flex flex-row align-items-center">
-                                <div style="width: 100px; margin-right: 20px;">
-                                  <form class="d-flex " method="POST">
-                                    <input class="btn btn-success p-1" style="width: 30px;" type="submit" name="rest_carrito" value="-">
-                                    <input type="hidden" value="{{cart.id}}" name="id_producto">
-                                    <input class="fw-normal mb-0 text-center border-0" style="width: 30px;" name="cantidad" type="text" value="{{ cart.cantidad}}" readonly>
-                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ cart.id) }}">
-                                    <input class="btn btn-success p-1" style="width: 30px;" type="submit" name="sum_carrito" value="+">
-                                  </form>
-                                </div>
+                                
+                                {% if producto.stock > 0 %}
+                                  <div style="width: 100px; margin-right: 20px;">
+                                    <form class="d-flex " method="POST">
+                                      <input class="btn btn-success p-1" style="width: 30px;" type="submit" name="rest_carrito" value="-">
+                                      <input type="hidden" value="{{cart.id}}" name="id_producto">
+                                      <input class="fw-normal mb-0 text-center border-0" style="width: 30px;" name="cantidad" type="text" value="{{ cart.cantidad}}" readonly>
+                                      <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ cart.id) }}">
+                                      <input class="btn btn-success p-1" style="width: 30px;" type="submit" name="sum_carrito" value="+">
+                                    </form>
+                                  </div>
+                                {% else %}
+                                    <p class="badge bg-primary rounded-pill " style="margin-right:40px !Important;">Producto agotado, por favor,</br> eliminelo del carrito para poder finalizar la compra</p>
+                                {% endif %}
+                                  
+                                
                                 <div style="width: 80px;">
                                   <h5 class="mb-0">{{ cart.total }} €</h5>
                                 </div>
@@ -73,7 +80,7 @@
                               </div>
                             </div>
                           </div>
-                        </div>
+                        
                     {% endfor %}
                   {% endfor %}
                 </div>
@@ -105,11 +112,14 @@
                       </div>
                     </div>
                   </div>
-                  <div id="smart-button-container">
-                    <div style="text-align: center;">
-                      <div id="paypal-button-container">
-                      </div>
-                  </div>
+                  {% if ver is same as (true) %}
+                     <div id="smart-button-container" style="margin-top: 20px !Important;">
+                      <div style="text-align: center;">
+                        <div id="paypal-button-container">
+                        </div>
+                    </div>
+                  {% endif %}
+                 
                 </div>
                 <script src="https://www.paypal.com/sdk/js?client-id=AUeUAjL3wRlGXvgT3MhjNIuf85bgQ29QmLKs8iJawklVw7KWVXblbIg2sLf3PLkiNlZiUwpXbQbdWYPn&enable-funding=venmo&currency=EUR" data-sdk-integration-source="button-factory"></script>
                 <script>
@@ -131,7 +141,7 @@
 
                   // Full available details
                   console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-                  //window.location="verificador?paymentToken="+orderData.purchase_units[0].payments.captures[0].id+"&status="+orderData.purchase_units[0].payments.captures[0].status;
+                  window.location="verificador?paymentToken="+orderData.purchase_units[0].payments.captures[0].id+"&status="+orderData.purchase_units[0].payments.captures[0].status;
                   // Show a success message within this page, e.g.
                   const element = document.getElementById('paypal-button-container');
                   element.innerHTML = '';
@@ -149,15 +159,13 @@
                   }
                   initPayPalButton();
                 </script>
-</div>
-
-</div>
-
-</div>
-</div>
-</div>
-</div>
-</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 {% endblock %}

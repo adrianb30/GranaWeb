@@ -41,7 +41,14 @@
                                             <a href="{{ path('app_tienda_show', {'id': producto.id}) }}" class="btn btn-sm btn-outline-secondary col-6">Ver más</a>
                                             <form method="POST" class="col-6">
                                                 <input type="hidden" name="producto" value="{{ producto.id }}">
-                                                <button type="submit" name="btn_carrito" class="btn btn-sm btn-outline-secondary col-12">Añadir al carrito</button>
+                                            {% if producto.stock > 0  %}
+                                                
+                                                    
+                                                    <button type="submit" name="btn_carrito" class="btn btn-sm btn-outline-secondary col-12">Añadir al carrito</button>
+                                                
+                                            {% else %}
+                                                <button type="submit" name="btn_carrito" class="btn btn-sm btn-outline-secondary col-12" disabled>Producto no disponible</button>
+                                            {% endif %}
                                             </form>
                                         </div>
                                     </div>

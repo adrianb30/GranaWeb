@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Estado de pedido{% endblock %}
+
+{% block body %}
+
+<div class="container py-5 h-100">
+  <div class="row d-flex justify-content-center align-items-center ">
+    <div class="col-12 col-md-11 col-lg-10 col-xl-9">
+      <div class="card bg-dark text-white" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center text-white">
+                <h2 class="{{clase}} p-2 rounded"> {{ mensaje }}</h2>
+                <div class="mt-5">
+                    <a class="btn btn-outline-primary">Volver a la tienda</a>
+                    <a class="btn btn-outline-secondary">Ver mis pedidos</a>
+                </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
