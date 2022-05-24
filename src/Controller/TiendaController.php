@@ -215,19 +215,59 @@ class TiendaController extends AbstractController
                         $detallepedido->setPedido($pedido);
                         $producto=$detallepedido;
                         $DetallePedidoRepository->add($detallepedido);
-                        $mensaje="Se ha completado la compra correctamente";
-                        $clase="bg-success";
+                        $CarritoDetalleRepository->remove($detalle);
                     } else {
                         // array_push($mensaje,$product->getNombre().", cantidad disponible: ". $product->getStock());
-                        $mensaje="No se ha completado la compra correctamente";
-                        $clase="bg-warning";
+                        return $this->redirectToRoute('app_final_compra_fallo', [], Response::HTTP_SEE_OTHER);
                     }
                 }               
             }
         }
+        return $this->redirectToRoute('app_final_compra_exito', [], Response::HTTP_SEE_OTHER);
+    }
+    /**
+     * @Route("/finalizacionExito", name="app_final_compra_exito")
+     */
+    public function exito()
+    {
+        $mensaje="Se ha completado la compra correctamente";
+        $clase="bg-success";
         return $this->render('tienda/verificacion.html.twig', [
             'mensaje' => $mensaje,
             'clase' => $clase,
         ]);
     }
+    /**
+     * @Route("/finalizacionFallo", name="app_final_compra_fallo")
+     */
+    public function fallo()
+    {
+        $mensaje="No se ha completado la compra correctamente";
+        $clase="bg-warning";
+        return $this->render('tienda/verificacion.html.twig', [
+            'mensaje' => $mensaje,
+            'clase' => $clase,
+        ]);
+    }
+
+    /**
+     * @Route("/mispedidos", name="app_mis_pedidos")
+     */
+    public function mispedidos()
+    {
+        $pedidos=$this->getUser()->getPedidos();
+        return $this->render('tienda/mispedidos.html.twig', [
+            'pedidos' => $pedidos,
+        ]);
+    }
+    /**
+     * @Route("/mispedidos/{id}", name="app_mis_pedido_show", methods={"GET"})
+     */
+    public function mispedidosdetalle(Pedido $pedido): Response
+    {
+        return $this->render('tienda/pedidosdetalles.html.twig', [
+            'pedido' => $pedido,
+        ]);
+    }
+    
 }

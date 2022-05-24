@@ -36,6 +36,11 @@ class MenuController extends AbstractController
             if ($route_name == 'Mi Cuenta') {
                 $special['perfil']['class'] = "active";
             }
+            $special['mispedidos']['title'] = 'Mis pedidos';
+            $special['mispedidos']['url'] = $this->generateUrl('app_mis_pedidos');
+            if ($route_name == 'mispedidos') {
+                $special['mispedidos']['class'] = "active";
+            }
             $special['cerrar_sesion']['title'] = 'Cerrar Sesión';
             $special['cerrar_sesion']['url'] = $this->generateUrl('app_logout');
             if ($route_name == 'cerrar_sesion') {
