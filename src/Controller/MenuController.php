@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Security;
 use App\Repository\CarritoDetalleRepository;
+use App\Repository\CategoriaRepository;
 
 class MenuController extends AbstractController
 {
@@ -18,12 +19,20 @@ class MenuController extends AbstractController
      * @var String $route_name
      *   Machine name of a route
      */
-    public function mainMenu(String $route_name,CarritoDetalleRepository $CarritoDetalleRepository)
+    public function mainMenu(String $route_name,CarritoDetalleRepository $CarritoDetalleRepository, CategoriaRepository $CategoriaRepository)
     {
         $items['inicio']['title'] = 'Inicio';
         $items['inicio']['url'] = $this->generateUrl('app_tienda');
         if ($route_name == 'inicio') {
             $items['inicio']['class'] = "active";
+        }
+
+        foreach ($CategoriaRepository->findAll() as $key => $value) {
+            $items[$value->getNombre()]['title'] = $value->getNombre();
+            $items[$value->getNombre()]['url'] = $this->generateUrl('app_tienda_categorias', array('categoria' => $value->getId()));
+            if ($route_name == $value->getNombre()) {
+                $items[$value->getNombre()]['class'] = "active";
+        }
         }
         if( $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY') ) {
             // Only for authenticated users

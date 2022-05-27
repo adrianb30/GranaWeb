@@ -47,6 +47,18 @@ class PedidoRepository extends ServiceEntityRepository
         }
     }
 
+     /**
+      * @return Pedido[] Returns an array of Pedido objects
+      */
+    public function findAllOrderedByFecha() { 
+        return $this->createQueryBuilder('a')
+            ->addOrderBy('a.fecha', 'DESC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult(); 
+        
+    } 
+
     // /**
     //  * @return Pedido[] Returns an array of Pedido objects
     //  */

@@ -37,9 +37,12 @@
                                             <form method="POST" class="col-6">
                                                 <input type="hidden" name="producto" value="{{ producto.id }}">
                                             {% if producto.stock > 0  %}
-                                                
-                                                    
+                                                {% if app.user %}
                                                     <button type="submit" name="btn_carrito" class="btn btn-sm btn-outline-secondary col-12">Añadir al carrito</button>
+                                                {% else %}
+                                                    <a href="{{ path('app_login') }}" class="btn btn-sm btn-outline-secondary col-12" name="iniciar_sesion">Para comprar necesita iniciar sesión</a>
+                                                {% endif %}
+                                                    
                                                 
                                             {% else %}
                                                 <button type="submit" name="btn_carrito" class="btn btn-sm btn-outline-secondary col-12" disabled>Producto no disponible</button>

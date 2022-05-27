@@ -64,7 +64,18 @@ class TiendaController extends AbstractController
         ]);
     }
     /**
-     * @Route("/tienda/{id}", name="app_tienda_show")
+     * @Route("/categoria/{categoria}", name="app_tienda_categorias")
+     */
+    public function categorias($categoria,Producto $producto, ProductoRepository $productoRepository, CarritoDetalleRepository $CarritoDetalleRepository): Response
+    {  
+        $productos=$productoRepository->findby(['categoria'=>$categoria]);
+        
+        return $this->render('tienda/index.html.twig', [
+            'productos'=>$productos,
+        ]);
+    }
+    /**
+     * @Route("/producto/{id}", name="app_tienda_show")
      */
     public function show(Producto $producto, ProductoRepository $productoRepository, CarritoDetalleRepository $CarritoDetalleRepository): Response
     {

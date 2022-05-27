@@ -64,7 +64,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/perfil", name="app_perfil", methods={"GET", "POST"})
      */
-    public function perfil(Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    public function perfil(Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager,UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $user= new User();
         $email = $request->getSession()->get('_security.last_username');
@@ -82,6 +82,10 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
             $mensaje="Se han actualizado los datos correctamente.";
+        }
+        if (isset($_POST['btn_password'])) {
+            $userRepository->upgradePassword($this->getUser(),$userPasswordHasher->hashPassword($user,$_POST['password']));
+            $mensaje="Se han actualizado la contraseña correctamente.";
         }
         return $this->render('registration/perfil.html.twig', [
             'informacion' => $user,
