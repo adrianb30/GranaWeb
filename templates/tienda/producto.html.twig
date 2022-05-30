@@ -38,10 +38,15 @@
                         <span class="text-success"><strong>{{ producto.stock}} Stock</strong> </span>
                     </div>	
                     <div class="buttons d-flex flex-row mt-5 gap-3">
-                        <form method="POST">
-                            <input type="hidden" name="producto" value="{{ producto.id }}">
-                            <button class="btn btn-dark" name="btn_carrito">Añadir al carrito</button>
-                        </form>
+                        {% if app.user %}
+                            <form method="POST">
+                                <input type="hidden" name="producto" value="{{ producto.id }}">
+                                <button class="btn btn-dark" name="btn_carrito">Añadir al carrito</button>
+                            </form>
+                        {% else %}
+                            <a href="{{ path('app_login') }}" class="btn btn-sm btn-outline-secondary col-12" name="iniciar_sesion">Para comprar necesita iniciar sesión</a>
+                        {% endif %}
+                        
                     </div>	
                 </div>
             </div>
