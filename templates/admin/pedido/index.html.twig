@@ -1,0 +1,39 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Pedidos{% endblock %}
+
+{% block body %}
+    <h1>Todos los pedidos</h1>
+    <a class="btn btn-primary m-2" href="{{ path('app_pedido_new') }}">Nuevo Pedido</a>
+    <table class="table">
+        <thead class="table-dark">
+            <tr>
+                <th>Id</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th>ID transacción</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pedido in pedidos %}
+            <tr>
+                <td>{{ pedido.id }}</td>
+                <td>{{ pedido.fecha ? pedido.fecha|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ pedido.estado }}</td>
+                <td>{{ pedido.transaccionid }}</td>
+                <td>
+                    <a class="btn btn-outline-info" href="{{ path('app_pedido_show', {'id': pedido.id}) }}">Ver</a>
+                    <a class="btn btn-outline-success" href="{{ path('app_pedido_edit', {'id': pedido.id}) }}">Editar</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">No se han encontrado resultados</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+{% endblock %}

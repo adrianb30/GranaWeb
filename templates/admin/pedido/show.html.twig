@@ -1,0 +1,99 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Ver Pedido{% endblock %}
+
+{% block body %}
+<div class="container py-5 h-100">
+  <div class="row d-flex justify-content-center align-items-center ">
+    <div class="col-12 col-md-11 col-lg-10 col-xl-9">
+      <div class="card bg-dark text-white" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center text-white">
+            <h1>Pedido <strong class="text-primary">#{{ pedido.id}}</strong> | Cliente {{pedido.usuario.nombre}} {{pedido.usuario.apellidos}}</h1>
+
+            <table class="table text-white ">
+                <tbody>
+                    <tr>
+                        <th>Id</th>
+                        <td>{{ pedido.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Dirección de envio</th>
+                        <td>{{ pedido.usuario.direccion }}</td>
+                    </tr>
+                    <tr>
+                        <th>Fecha</th>
+                        <td>{{ pedido.fecha ? pedido.fecha|date('Y-m-d H:i:s') : '' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Estado</th>
+                        <td>{{ pedido.estado }}</td>
+                    </tr>
+                    <tr>
+                        <th>Transaccionid</th>
+                        <td>{{ pedido.transaccionid }}</td>
+                    </tr>
+                    {% set total = 0 %}
+                    {% for detalles in pedido.detallePedidos %}
+                        {% set total = total + detalles.total %}
+                    {% endfor %}
+                    <tr>
+                        <th>Total de Factura</th>
+                        <td class="bg-warning text-black text-center"><strong>{{ total }}€</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="container">
+                <div class="row">
+                    
+                    {% for detalles in pedido.detallePedidos %}
+                    <div class="col-6">
+                    <table class="table text-white border ro">
+                        <tbody>
+                            <tr class="bg-primary text-white">
+                                <th >Producto</th>
+                                {% for producto in detalles.producto %}
+                                    <td>{{producto.nombre}}</td>
+                                {% endfor %}
+                                
+                            </tr>
+                            <tr>
+                                <th>Contidad</th>
+                                <td>{{ detalles.cantidad }}</td>
+                            </tr>
+                            <tr>
+                                <th>Total</th>
+                                <td>{{ detalles.total}}€</td>
+                            </tr>
+                        </tbody>
+                    </table>                    
+                    </div>
+                    {% endfor %}
+                    
+                </div> 
+            </div>
+            <div class="container">
+                <div class="row">
+                <div class="col-4">
+                        <a class="btn btn-outline-danger " href="{{ path('app_pedido_index') }}">Volver</a>
+                    </div>
+                    <div class="col-4">
+                        <a class="btn btn-outline-info " href="{{ path('app_pedido_edit', {'id': pedido.id}) }}">Modificar estado</a>
+                    </div>
+                    
+                    <div class="col-4">
+                        {{ include('admin/pedido/_delete_form.html.twig') }}
+                    </div>
+                    
+                </div>
+            
+            </div>
+
+            
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

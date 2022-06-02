@@ -1,0 +1,56 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ producto.nombre }}{% endblock %}
+
+{% block body %}
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center ">
+      <div class="col-12 col-md-11 col-lg-10 col-xl-9">
+        <div class="card bg-dark text-white" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+                <div class="container">
+                    <div class="row ">
+                        <h1>Producto: {{ producto.nombre }}</h1>
+                        
+                        <hr>
+                        
+                        <table class="table text-white">
+                            <tbody>
+                                <tr>
+                                    <th>ID</th>
+                                    <td colspan="3">{{ producto.id }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Imagen</th>
+                                    <td colspan="3"><img src="{{ asset('uploads/img/' ~ producto.imagen) }}" width="400px"></td>
+                                </tr>
+                                <tr>
+                                    <th>Descripción</th>
+                                    <td colspan="3">{{ producto.descripcion }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Stock</th>
+                                    <td colspan="3">{{ producto.stock }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Precio</th>
+                                    <td colspan="3">{{ producto.precio }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Acciones</th>
+                                    <td><a class="btn btn-outline-danger form-control" href="{{ path('app_admin_producto_index') }}">Volver</a></td>
+                                    <td><a class="btn btn-outline-warning ml-5 form-control" href="{{ path('app_admin_producto_edit', {'id': producto.id}) }}">Editar</a></td>
+                                    <td>{{ include('admin/producto/_delete_form.html.twig') }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{{ form_start(form) }}
+    <div class="form-outline form-white mb-4">
+        <div class="input-group mb-2 ">
+            <div class="input-group-prepend col-2">
+                <div class="input-group-text">Nombre</div>
+            </div>
+            {{ form_widget(form.nombre) }}
+        </div>  
+    </div>
+    <div class="form-outline form-white mb-4">
+        <div class="input-group mb-2">
+            <div class="input-group-prepend  col-2">
+                <div class="input-group-text">Apellidos</div>
+            </div>
+            {{ form_widget(form.apellidos) }}
+        </div>  
+    </div>
+    <div class="form-outline form-white mb-4">
+        <div class="input-group mb-2">
+            <div class="input-group-prepend col-2">
+                <div class="input-group-text">DNI</div>
+            </div>
+            {{ form_widget(form.dni) }}
+        </div>  
+    </div>
+    <div class="form-outline form-white mb-4">
+        <div class="input-group mb-2">
+            <div class="input-group-prepend col-2">
+                <div class="input-group-text">Dirección</div>
+            </div>
+            {{ form_widget(form.direccion) }}
+        </div>  
+    </div>
+    <div class="form-outline form-white mb-4">
+        <div class="input-group mb-2">
+            <div class="input-group-prepend col-2">
+                <div class="input-group-text">Correo</div>
+            </div>
+            {{ form_widget(form.email) }}
+        </div>  
+    </div>
+    <div class="form-outline form-white mb-4">
+        <div class="input-group mb-2">
+            <div class="input-group-prepend col-2">
+                <div class="input-group-text">Tipo de cuenta</div>
+            </div>
+            {{ form_widget(form.Roles) }}
+        </div>  
+    </div>
+    <button class="btn btn-outline-success">{{ button_label|default('Guardar') }}</button>
+{{ form_end(form) }}

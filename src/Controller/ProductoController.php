@@ -23,7 +23,7 @@ class ProductoController extends AbstractController
      */
     public function index(ProductoRepository $productoRepository): Response
     {
-        return $this->render('producto/index.html.twig', [
+        return $this->render('admin/producto/index.html.twig', [
             'productos' => $productoRepository->findAll(),
         ]);
     }
@@ -68,7 +68,7 @@ class ProductoController extends AbstractController
             return $this->redirectToRoute('app_admin_producto_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('producto/new.html.twig', [
+        return $this->renderForm('admin/producto/new.html.twig', [
             'producto' => $producto,
             'form' => $form,
             'categorias' => $categoriarepository->getCategorias(),
@@ -80,7 +80,7 @@ class ProductoController extends AbstractController
      */
     public function show(Producto $producto): Response
     {
-        return $this->render('producto/show.html.twig', [
+        return $this->render('admin/producto/show.html.twig', [
             'producto' => $producto,
         ]);
     }
@@ -128,7 +128,7 @@ class ProductoController extends AbstractController
             return $this->redirectToRoute('app_admin_producto_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('producto/edit.html.twig', [
+        return $this->renderForm('admin/producto/edit.html.twig', [
             'producto' => $producto,
             'form' => $form,
             'categorias' => $categoriarepository->getCategorias(),

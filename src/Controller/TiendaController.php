@@ -208,7 +208,7 @@ class TiendaController extends AbstractController
             $time = strtotime('now');
             $pedido->setUsuario($this->getUser());
             $pedido->setFecha($time);
-            $pedido->setEstado($_GET['status']);
+            $pedido->setEstado('Pagado');
             $pedido->setTransaccionid($_GET['paymentToken']);
             
             foreach ($totalcarrito as $detalles => $detalle) {

@@ -25,7 +25,7 @@ class PedidoController extends AbstractController
      */
     public function index(PedidoRepository $pedidoRepository): Response
     {
-        return $this->render('pedido/index.html.twig', [
+        return $this->render('admin/pedido/index.html.twig', [
             'pedidos' => $pedidoRepository->findAll(),
         ]);
     }
@@ -46,7 +46,7 @@ class PedidoController extends AbstractController
             $pedido->setUsuario($UserRepository->findOneBy(['id'=> $_POST['cliente']]));
             $pedido->setFecha($time);
             $pedido->setEstado('Pendiente');
-            $pedido->setTransaccionid("13k2h98khjw09sfd");
+            $pedido->setTransaccionid("Compra en tienda");
             for ($i=1; $i <= $parada; $i++) {
                 $producto=$ProductoRepository->findOneBy(['id'=>$_POST['producto'.$i]]);
                 if ($producto->getStock() > 0 && $_POST['cantidadproducto'.$i] <= $producto->getStock() ) {
@@ -67,7 +67,7 @@ class PedidoController extends AbstractController
             }
         }
 
-        return $this->renderForm('pedido/new.html.twig', [
+        return $this->renderForm('admin/pedido/new.html.twig', [
             'pedido' => $pedido,
             'users' => $UserRepository->findAll(),
             'productos' => $ProductoRepository->findAll(),
@@ -80,7 +80,7 @@ class PedidoController extends AbstractController
      */
     public function show(Pedido $pedido): Response
     {
-        return $this->render('pedido/show.html.twig', [
+        return $this->render('admin/pedido/show.html.twig', [
             'pedido' => $pedido,
         ]);
     }
@@ -98,7 +98,7 @@ class PedidoController extends AbstractController
             $pedidoRepository->add($pedido);
             return $this->redirectToRoute('app_pedido_index', [], Response::HTTP_SEE_OTHER);
         }
-        return $this->renderForm('pedido/edit.html.twig', [
+        return $this->renderForm('admin/pedido/edit.html.twig', [
             'pedido' => $pedido,
         ]);
     }
